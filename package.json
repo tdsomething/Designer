@@ -9,6 +9,11 @@
     "lint": "eslint src --fix --ext .ts,.tsx,.vue,.js,.jsx",
     "prettier": "prettier --write ."
   },
+  "engines": {
+    "node": ">=16",
+    "pnpm": ">=6",
+    "vscode": "^1.22.0"
+  },
   "dependencies": {
     "vue": "^3.2.25"
   },
