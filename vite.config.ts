@@ -1,7 +1,11 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import unpluginVueComponents from 'unplugin-vue-components/vite'
+import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue()]
+  plugins: [vue(), unpluginVueComponents({
+    resolvers: [ NaiveUiResolver() ],
+    dts: true
+  })]
 })
