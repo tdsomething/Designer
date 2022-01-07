@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <n-button>naive-ui</n-button>
+  <router-view></router-view>
 </template>
 
 <style>
