@@ -105,3 +105,4 @@ dist
 
 # site
 components.d.ts
+auto-imports.d.ts
