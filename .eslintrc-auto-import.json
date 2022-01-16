@@ -44,6 +44,7 @@
     "useAttrs": true,
     "useCssModule": true,
     "useCssVars": true,
+    "useLocalStorage": true,
     "useRoute": true,
     "useRouteHash": true,
     "useRouteQuery": true,

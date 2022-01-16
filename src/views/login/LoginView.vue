@@ -8,14 +8,13 @@
         </h2>
       </div>
       <form class="mt-8 space-y-6">
-        <input type="hidden" name="remember" value="true" />
+        <!-- <input type="hidden" name="remember" value="true" /> -->
         <div class="rounded-md shadow-sm -space-y-px">
           <div>
-            <label for="email-address" class="sr-only">Email address</label>
+            <label class="sr-only">Email address</label>
             <input
               ref="emailRef"
               v-model="email"
-              name="email"
               type="email"
               autocomplete="email"
               required
@@ -24,11 +23,10 @@
             />
           </div>
           <div>
-            <label for="password" class="sr-only">Password</label>
+            <label class="sr-only">Password</label>
             <input
               ref="passwordRef"
               v-model="password"
-              name="password"
               type="password"
               required
               autocomplete="current-password"
@@ -41,12 +39,10 @@
         <div class="flex items-center justify-between">
           <div class="flex items-center">
             <input
-              id="remember-me"
-              name="remember-me"
               type="checkbox"
               class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
             />
-            <label for="remember-me" class="ml-2 block text-sm text-gray-900"> Remember me </label>
+            <label class="ml-2 block text-sm text-gray-900"> Remember me </label>
           </div>
 
           <div class="text-sm">
@@ -58,7 +54,7 @@
           <button
             class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             type="submit"
-            @click="handleClick"
+            @click.prevent="handleClick"
           >
             <span class="absolute left-0 inset-y-0 flex items-center pl-3">
               <LockClosedIcon
@@ -76,6 +72,7 @@
 
 <script setup lang="ts">
 import { LockClosedIcon } from '@heroicons/vue/solid'
+import { login } from '@/apis'
 
 const email = ref('')
 const password = ref('')
@@ -83,11 +80,16 @@ const emailRef = ref()
 const passwordRef = ref()
 const router = useRouter()
 
-const handleClick = () => {
+const handleClick = async () => {
   const pass =
-    (emailRef.value as HTMLInputElement).checkValidity() &&
-    (passwordRef.value as HTMLInputElement).checkValidity()
-  pass && router.push({ path: '/' })
+    (emailRef.value as HTMLInputElement).reportValidity() &&
+    (passwordRef.value as HTMLInputElement).reportValidity()
+  if (pass) {
+    const resp = await login({ email: email.value, password: password.value })
+    const token = useLocalStorage('token', '')
+    token.value = resp.data.token
+    token.value && router.push({ path: '/' })
+  }
 }
 </script>
 

@@ -11,11 +11,24 @@ export default defineConfig({
       '@': resolve(__dirname, 'src')
     }
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:9801',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
+  },
   plugins: [
     vue(),
     unpluginAutoImport({
       include: [/\.[tj]sx?&/, /\.vue$/, /\.vue\?vue/, /\.md$/],
-      imports: ['vue', 'vue-router', { '@vueuse/router': ['useRouteHash', 'useRouteQuery'] }],
+      imports: [
+        'vue',
+        'vue-router',
+        { '@vueuse/router': ['useRouteHash', 'useRouteQuery'], '@vueuse/core': ['useLocalStorage'] }
+      ],
       eslintrc: {
         enabled: true,
         filepath: './.eslintrc-auto-import.json',
