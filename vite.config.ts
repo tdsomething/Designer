@@ -15,7 +15,7 @@ export default defineConfig({
     vue(),
     unpluginAutoImport({
       include: [/\.[tj]sx?&/, /\.vue$/, /\.vue\?vue/, /\.md$/],
-      imports: ['vue', 'vue-router'],
+      imports: ['vue', 'vue-router', { '@vueuse/router': ['useRouteHash', 'useRouteQuery'] }],
       eslintrc: {
         enabled: true,
         filepath: './.eslintrc-auto-import.json',
