@@ -1,11 +1,8 @@
 <script setup lang="ts">
 import { getUserInfo } from '@/apis'
-import { useUserStore } from '@/stores'
 
 onMounted(async () => {
-  const userStore = useUserStore()
-  const resp = await getUserInfo()
-  userStore.userInfo = resp.data
+  await getUserInfo()
 })
 </script>
 

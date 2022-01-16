@@ -74,6 +74,7 @@
 import { LockClosedIcon } from '@heroicons/vue/solid'
 import { login } from '@/apis'
 import { useMessage } from 'naive-ui'
+import md5 from 'blueimp-md5'
 
 const email = ref('')
 const password = ref('')
@@ -87,7 +88,10 @@ const handleClick = async () => {
     (emailRef.value as HTMLInputElement).reportValidity() &&
     (passwordRef.value as HTMLInputElement).reportValidity()
   if (pass) {
-    const resp = await login({ email: email.value, password: password.value })
+    const resp = await login({
+      email: email.value,
+      password: md5(password.value)
+    })
     if (resp.code.toString().charAt(0) == '5') {
       return message.error(resp.msg)
     }
