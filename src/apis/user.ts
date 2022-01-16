@@ -1,6 +1,6 @@
 import { _get } from '@/utils'
-import { IUser } from '@/types'
+import { IUser, IResponse } from '@/types'
 
 export const getUserInfo = () => {
-  return _get<IUser>('/user')
+  return _get<IResponse<IUser>>('/user')
 }
