@@ -73,12 +73,14 @@
 <script setup lang="ts">
 import { LockClosedIcon } from '@heroicons/vue/solid'
 import { login } from '@/apis'
+import { useMessage } from 'naive-ui'
 
 const email = ref('')
 const password = ref('')
 const emailRef = ref()
 const passwordRef = ref()
 const router = useRouter()
+const message = useMessage()
 
 const handleClick = async () => {
   const pass =
@@ -86,6 +88,9 @@ const handleClick = async () => {
     (passwordRef.value as HTMLInputElement).reportValidity()
   if (pass) {
     const resp = await login({ email: email.value, password: password.value })
+    if (resp.code.toString().charAt(0) == '5') {
+      return message.error(resp.msg)
+    }
     const token = useLocalStorage('token', '')
     token.value = resp.data.token
     token.value && router.push({ path: '/' })
