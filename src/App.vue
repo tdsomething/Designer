@@ -1,4 +1,10 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { getUserInfo } from '@/apis'
+
+onMounted(async () => {
+  await getUserInfo()
+})
+</script>
 
 <template>
   <n-message-provider>

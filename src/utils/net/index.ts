@@ -10,7 +10,7 @@ axios.interceptors.request.use(
   (onFulfilled) => {
     const token = localStorage.getItem('token')
     if (token) {
-      onFulfilled.headers = { ...onFulfilled.headers, token: token }
+      onFulfilled.headers = { ...onFulfilled.headers, Authorization: `Bearer ${token}` }
     }
     return onFulfilled
   },
@@ -44,7 +44,7 @@ const parseQueryString = (querys: IFlatMap): string => {
   return res
 }
 
-const _get = <T>(uri: string, querys: IFlatMap, config?: IAxiosRequestConfig) => {
+const _get = <T>(uri: string, querys: IFlatMap = {}, config?: IAxiosRequestConfig) => {
   return axios
     .get(joinQueryStringToUri(uri, querys), config)
     .then<T>((res) => res.data)
