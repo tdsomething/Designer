@@ -13,7 +13,15 @@ export default defineConfig({
   },
   plugins: [
     vue(),
-    unpluginAutoImport(),
+    unpluginAutoImport({
+      include: [/\.[tj]sx?&/, /\.vue$/, /\.vue\?vue/, /\.md$/],
+      imports: ['vue', 'vue-router'],
+      eslintrc: {
+        enabled: true,
+        filepath: './.eslintrc-auto-import.json',
+        globalsPropValue: true
+      }
+    }),
     unpluginVueComponents({
       resolvers: [
         NaiveUiResolver(),
