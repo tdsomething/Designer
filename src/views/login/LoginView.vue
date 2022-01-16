@@ -13,6 +13,7 @@
           <div>
             <label for="email-address" class="sr-only">Email address</label>
             <input
+              ref="emailRef"
               v-model="email"
               name="email"
               type="email"
@@ -25,6 +26,7 @@
           <div>
             <label for="password" class="sr-only">Password</label>
             <input
+              ref="passwordRef"
               v-model="password"
               name="password"
               type="password"
@@ -55,7 +57,8 @@
         <div>
           <button
             class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            @click.prevent="handleClick"
+            type="submit"
+            @click="handleClick"
           >
             <span class="absolute left-0 inset-y-0 flex items-center pl-3">
               <LockClosedIcon
@@ -73,8 +76,19 @@
 
 <script setup lang="ts">
 import { LockClosedIcon } from '@heroicons/vue/solid'
+
 const email = ref('')
 const password = ref('')
+const emailRef = ref()
+const passwordRef = ref()
+const router = useRouter()
+
+const handleClick = () => {
+  const pass =
+    (emailRef.value as HTMLInputElement).checkValidity() &&
+    (passwordRef.value as HTMLInputElement).checkValidity()
+  pass && router.push({ path: '/' })
+}
 </script>
 
 <style lang="scss" scoped></style>
